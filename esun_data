@@ -1,0 +1,33 @@
+import pandas as pd
+
+category_df = pd.read_csv('stock_category.csv',header= None)
+category_df.set_axis(['code','category'], axis='columns', inplace=True)
+category_df = pd.read_csv('stock_category.csv',header= None)
+
+cust_df = pd.read_csv('cust_info.csv',header=None)
+cust_df.set_axis(['投資人代碼','年齡區間','開戶年','開戶別','違約註記',
+                  '違約日期編號','違約紀錄排序','玉證交易經驗代碼','買入','賣出','非交易'], axis=1, inplace=True)
+                  
+txn = pd.DataFrame(columns=['date','cust','BS','market','stock','type','price','amount','return'])
+txn = pd.read_csv('C://Users//Alex//Desktop//Python//E.sun//txn.csv')
+txn.set_axis(['index','date','cust','BS','market','stock','type','price','amount','return'], axis=1, inplace=True)
+
+stock_info = pd.DataFrame(columns=['date','stock','open_price','max_price','min_price','close_price','volume','amount','capital','alpha','beta_21','beta_65','beta_250'])
+for i in [1,2,3,4]:
+    temp = pd.read_csv('C://Users//Alex//Desktop//Python//E.sun//stock_info//stock_info_2019Q'+str(i)+'.csv')
+    temp.set_axis(['date','stock','open_price','max_price','min_price','close_price','volume','amount',
+                   'capital','alpha','beta_21','beta_65','beta_250'], axis=1, inplace=True) 
+    stock_info = pd.concat([stock_info,temp], axis=0)
+for i in [1,2,3,4]:
+    temp = pd.read_csv('C://Users//Alex//Desktop//Python//E.sun//stock_info//stock_info_2020Q'+str(i)+'.csv')
+    temp.set_axis(['date','stock','open_price','max_price','min_price','close_price','volume','amount',
+                   'capital','alpha','beta_21','beta_65','beta_250'], axis=1, inplace=True) 
+    stock_info = pd.concat([stock_info,temp], axis=0)
+temp = pd.read_csv('C://Users//Alex//Desktop//Python//E.sun//stock_info//stock_info_2021Q1.csv')
+temp.set_axis(['date','stock','open_price','max_price','min_price','close_price','volume','amount',
+               'capital','alpha','beta_21','beta_65','beta_250'], axis=1, inplace=True) 
+stock_info = pd.concat([stock_info,temp], axis=0)
+
+
+a = txn.duplicated(subset='stock')
+txn[a==False]
